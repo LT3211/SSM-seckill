@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>秒杀详情页</title>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- 可选的Bootstrap主题文件（一般不使用） -->
+    <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap-theme.min.css" rel="stylesheet">
+
+    <!-- HTML5 Shiv 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
+    <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" th:href="@{/static/lib/font/css/font-awesome.min.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/seckill.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/public.css}"/>
+</head>
+<body>
+
+
+<div id="app">
+    <!-- header -->
+    <div th:replace="public/header :: header"></div>
+
+    <!-- main -->
+    <div id="main">
+        <div>
+            <div class="container">
+                <div class="container">
+                    <div class="fl preview-wrap">
+                        <div id="preview" class="spec-preview">
+                            <span class="jqzoom"><img th:src="${seckill.image}" alt=""/></span>
+                        </div>
+                    </div>
+
+                    <div class="fr itemInfo-wrap">
+                        <div class="sku-name">
+                            <h4 th:text="${seckill.title}"></h4>
+                        </div>
+                        <div class="news">
+                            <span><img th:src="@{/static/lib/font/icon/clock.png}"/>精品秒杀</span>
+                        </div>
+                        <div class="summary">
+                            <div class="summary-wrap">
+
+                                <div class="fl title">
+                                    <i>秒杀价</i>
+                                </div>
+                                <div class="fl price">
+                                    <i>¥</i>
+                                    <b th:text="${seckill.costPrice}"></b>
+                                    <span>原价：<b th:text="${seckill.price}"></b></span>
+                                </div>
+                                <div class="fr remark">
+                                    剩余库存：<b th:text="${seckill.stockCount}"></b>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="text-center">
+                            <div style="color: #ff0000d9;">
+                                <h2>
+                                    <span id="seckill-time-span"></span>
+                                    <br/>
+                                    <br/>
+                                    <span id="seckill-box"></span>
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--登录弹出层 输入电话-->
+    <div id="killPhoneModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title text-center">
+                        <span class="fa fa-phone fa-fw"> </span>秒杀电话:
+                    </h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xs-8 col-xs-offset-2">
+                            <input type="text" name="killPhone" id="killPhoneKey"
+                                   placeholder="请输入电话号码" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <!--验证信息-->
+                    <span id="killPhoneMessage" style="margin-right: 40%;"></span>
+                    <button type="button" id="killPhoneBtn" class="btn btn-success">
+                        提交
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- footer -->
+    <div th:replace="public/footer :: footer"></div>
+</div>
+
+</body>
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<!-- jQuery Cookie操作插件 -->
+<script src="http://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<!--jQuery countDown倒计时插件-->
+<script src="https://cdn.bootcss.com/jquery.countdown/2.1.0/jquery.countdown.min.js"></script>
+
+<script th:src="@{/static/js/seckill_detail.js}"></script>
+
+<script type="text/javascript" th:inline="javascript">
+    $(function () {
+        //使用表达式传入参数
+        seckill.detail.init({
+            seckillId: [[${seckill.seckillId}]],
+            startTime: [[${seckill.startTime.time}]],//毫秒
+            endTime: [[${seckill.endTime.time}]],
+            money: [[${seckill.costPrice}]] //秒杀价钱
+        });
+    });
+</script>
+</html>
